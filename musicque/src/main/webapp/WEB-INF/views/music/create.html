@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/music/create}" method="post" th:object="${music}" enctype="multipart/form-data">
+    <label >Name: </label>
+    <input type="text" th:field="*{name}"><br>
+    <label >Artist: </label>
+    <input type="text" th:field="*{artist}"><br>
+    <label >Category: </label>
+    <input type="text" th:field="*{category}"><br>
+    <label>Audio</label>
+    <input type="file" th:field="*{link}" oninput="previewFile()"><br>
+    <button type="submit">Create</button>
+</form>
+</body>
+<script>
+    function previewFile() {
+        var preview = document.querySelector('audio');
+        var file    = document.querySelector('input[type=file]').files[0];
+        var reader  = new FileReader();
+
+        reader.onloadend = function () {
+            preview.src = reader.result;
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = "";
+        }
+    }
+</script>
+</html>
